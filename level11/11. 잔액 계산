@@ -1,0 +1,62 @@
+1/1 잔액 계산
+시간 제한 : 2초메모리 제한 : 256MB
+
+문제 설명
+은행 전산실에서 일을 하고 있습니다.
+
+고객 계좌의 전날 잔액 int balance가 주어집니다.
+고객이 할 수 있는 거래는 두가지 입니다.
+
+1. 입금(계좌에 금액 입금)
+2. 출금(계좌에서 금액 출금, 신용 거래가 가능한 계좌이기 때문에 마이너스도 가능 합니다.)
+
+입금은 "C 거래금액" 으로 나타내고, 출금은 "D 거래금액" 으로 나타냅니다.(자세한 사항은 예제를 참조하세요.)
+오늘의 거래내역 vector<string> transactions가 주어질때, 최종 잔액을 리턴하세요.
+
+참고 / 제약 사항
+balance는 0 이상 1,000,000 이하 입니다.
+transactions 의 요소의 개수는 0개 이상, 50개 이하 입니다.
+transactions의 각 요소는 입금: "C 거래금액", 출금: "D 거래금액" 이며, 문자열 입니다.
+거래금액은 1 이상 1,000,000 이하 입니다.
+
+테스트 케이스
+int balance = 100
+vector<string> transactions = ["C 1000","D 500","D 350"] 리턴(정답): 250
+순서대로 계산하면 아래와 같습니다.
+100 → 1100 → 600 → 250
+
+int balance = 100
+vector<string> transactions = [] 리턴(정답): 100
+거래내역이 없기때문에 잔액변동이 없습니다.
+
+int balance = 100
+vector<string> transactions = ["D 50","D 20","D 40"] 리턴(정답): -10
+마이너스 값을 가질 수 있습니다.
+
+int balance = 53874
+vector<string> transactions = ["D 1234","C 987","D 2345","C 654","D 6789","D 34567"] 리턴(정답): 10580
+
+
+
+코드
+#include <string>
+#include <vector>
+using namespace std;
+
+//핵심 소스코드의 설명을 주석으로 작성하면 평가에 큰 도움이 됩니다.
+class Solution{
+public:
+    int solution(int balance, vector<string> transactions){
+        for(int i=0; i<transactions.size(); i++){
+            int tmp = 0;
+            for(int j=2; j<transactions[i].size(); j++){
+                tmp *= 10;
+                tmp += transactions[i][j]-'0';
+            }
+            if(transactions[i][0]=='C') balance += tmp;
+            else balance -= tmp;
+        }
+
+        return balance;
+    }
+};

@@ -1,0 +1,41 @@
+1/1 정렬하기
+시간 제한 : 2초메모리 제한 : 256MB
+
+문제 설명
+양의 정수가 담긴 vector<int> arr가 주어집니다.
+vector<int> arr의 각 요소를 문자열이라 가정했을때의 "사전순" 기준 오름차순으로 정렬하여 리턴하세요.
+※ [15, 143, 167]을 "사전순" 기준 오름차순 정렬하면, [143, 15, 167] 입니다.
+
+참고 / 제약 사항
+arr의 요소의 개수는 1개 이상, 100개 이하 입니다.
+arr의 객 요소는 1이상, 1,000이하의 양의 정수 입니다.
+
+테스트 케이스
+vector<int> arr = [15,143,167] 리턴(정답): [143,15,167]
+
+
+
+코드
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+//핵심 소스코드의 설명을 주석으로 작성하면 평가에 큰 도움이 됩니다.
+class Solution{
+public:
+    vector<int> solution(vector<int> arr){
+        pair<int,int> A[arr.size()];
+        for(int i=0; i<arr.size(); i++){
+            int tmp = arr[i];
+            while(tmp<1000) tmp*=10;
+            A[i].first = tmp;
+            A[i].second = i;
+        }
+
+        sort(A, A+arr.size());
+
+        vector<int> ans;
+        for(int i=0; i<arr.size(); i++) ans.push_back(arr[A[i].second]);
+        return ans;
+    }
+};
